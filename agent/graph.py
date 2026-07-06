@@ -104,6 +104,22 @@ Keep it under 300 words. Use markdown headers."""
 def deep_read_node(state: AgentState) -> dict:
     file_contents = read_files(state["repo_path"], state["important_files"])
 
+    # If we genuinely have no file content to show the model, don't ask it to
+    # guess - that's exactly how generic, made-up risk notes get generated.
+    # Be honest about the gap instead.
+    if not file_contents or not any(
+        content.strip() and not content.startswith("(could not read file")
+        for content in file_contents.values()
+    ):
+        return {
+            "file_contents": file_contents,
+            "risk_notes": (
+                "- No file content could be read for deep analysis - this repo's "
+                "file types aren't yet supported by this beta's important-file "
+                "detection, so no risk notes could be generated for this run. (confirmed)"
+            ),
+        }
+
     llm = get_llm()
 
     system_prompt = (

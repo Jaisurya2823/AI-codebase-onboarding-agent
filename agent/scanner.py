@@ -34,11 +34,13 @@ ENTRY_POINT_CANDIDATES = {
     "index.js", "index.ts", "app.js", "app.ts", "server.js", "server.ts",
     "main.py", "app.py", "manage.py", "wsgi.py", "asgi.py",
     "main.go", "main.rs", "Program.cs",
+    "index.html", "app.html", "home.html",
 }
 
 CODE_EXTENSIONS = {
     ".py", ".js", ".ts", ".jsx", ".tsx", ".go", ".rs", ".rb",
     ".java", ".kt", ".php", ".cs", ".c", ".cpp", ".h",
+    ".html", ".css",
 }
 
 MAX_FILE_READ_CHARS = 20000  # cap per-file content sent to the LLM
